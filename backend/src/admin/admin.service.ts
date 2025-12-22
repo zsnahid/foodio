@@ -10,6 +10,7 @@ import { UpdateCategoryDto } from '../categories/dto/update-category.dto';
 import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
 import { MenuItem } from 'src/menu-items/entities/menu-item.entity';
 import { UpdateMenuItemDto } from 'src/menu-items/dto/update-menu-item.dto';
+import { UpdateOrderStatusDto } from 'src/orders/dto/update-order-status.dto';
 
 @Injectable()
 export class AdminService {
@@ -99,7 +100,21 @@ export class AdminService {
     return result.affected ? result.affected > 0 : false;
   }
 
-  async getOrders() {
+  async getOrders(): Promise<Order[]> {
     return this.orderRepository.find({ relations: ['orderItems'] });
+  }
+
+  async updateOrderStatus(
+    id: string,
+    updateOrderStatusDto: UpdateOrderStatusDto,
+  ): Promise<Order> {
+    const order = await this.orderRepository.preload({
+      id,
+      ...updateOrderStatusDto,
+    });
+    if (!order) {
+      throw new NotFoundException(`Order with ID ${id} not found`);
+    }
+    return this.orderRepository.save(order);
   }
 }

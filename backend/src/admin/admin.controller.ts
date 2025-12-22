@@ -16,6 +16,7 @@ import { Roles } from 'src/auth/decorators/roles.decorator';
 import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
 import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
 import { UpdateMenuItemDto } from 'src/menu-items/dto/update-menu-item.dto';
+import { UpdateOrderStatusDto } from 'src/orders/dto/update-order-status.dto';
 
 @Controller('admin')
 // ** All endpoints are protected by a guard to ensure only users with ADMIN role can access them
@@ -84,6 +85,6 @@ export class AdminController {
   }
 
   // Update order status
-  @Patch('orders/:id/status')
-  async updateOrderStatus() {}
+  @Patch('order/update-status')
+  async updateOrderStatus(@Body() updateOrderStatusDto: UpdateOrderStatusDto) {}
 }

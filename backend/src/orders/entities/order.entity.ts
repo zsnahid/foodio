@@ -9,7 +9,7 @@ import {
 } from 'typeorm';
 import { OrderItem } from './order-item.entity';
 
-enum OrderStatus {
+export enum OrderStatus {
   PENDING = 'pending',
   PREPARING = 'preparing',
   READY = 'ready',
