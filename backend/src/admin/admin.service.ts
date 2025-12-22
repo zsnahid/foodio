@@ -9,6 +9,7 @@ import { Category } from 'src/categories/entities/category.entity';
 import { UpdateCategoryDto } from '../categories/dto/update-category.dto';
 import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
 import { MenuItem } from 'src/menu-items/entities/menu-item.entity';
+import { UpdateMenuItemDto } from 'src/menu-items/dto/update-menu-item.dto';
 
 @Injectable()
 export class AdminService {
@@ -77,7 +78,21 @@ export class AdminService {
     return this.menuItemRepository.save(menuItem);
   }
 
-  async updateMenuItem() {}
+  async updateMenuItem(
+    id: string,
+    updateMenuItemDto: UpdateMenuItemDto,
+  ): Promise<MenuItem> {
+    const menuItem = await this.menuItemRepository.preload({
+      id,
+      ...updateMenuItemDto,
+    });
+
+    if (!menuItem) {
+      throw new NotFoundException(`Menu item with ID ${id} not found`);
+    }
+
+    return this.menuItemRepository.save(menuItem);
+  }
 
   async deleteMenuItem() {}
 

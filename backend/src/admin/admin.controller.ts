@@ -15,6 +15,7 @@ import { UserRole } from 'src/users/entities/user.entity';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
 import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
+import { UpdateMenuItemDto } from 'src/menu-items/dto/update-menu-item.dto';
 
 @Controller('admin')
 // ** All endpoints are protected by a guard to ensure only users with ADMIN role can access them
@@ -44,8 +45,10 @@ export class AdminController {
   }
 
   // Delete a category
-  @Delete('categories/:id')
-  async deleteCategory() {}
+  @Delete('categories/:categoryId')
+  async deleteCategory(@Param('categoryId') categoryId: string) {
+    return this.adminService.deleteCategory(categoryId);
+  }
 
   // List all menu items
   @Get('menu-items')
@@ -60,11 +63,16 @@ export class AdminController {
   }
 
   // Update item details or set availability
-  @Patch('menu-items/:id')
-  async updateMenuItem() {}
+  @Patch('menu-items/:menuItemId')
+  async updateMenuItem(
+    @Param('menuItemId') menuItemId: string,
+    @Body() updateMenuItemDto: UpdateMenuItemDto,
+  ) {
+    return this.adminService.updateMenuItem(menuItemId, updateMenuItemDto);
+  }
 
   // Delete a menu item
-  @Delete('menu-items/:id')
+  @Delete('menu-items/:menuItemId')
   async deleteMenuItem() {}
 
   // List all orders
