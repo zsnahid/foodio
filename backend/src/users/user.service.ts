@@ -61,4 +61,12 @@ export class UserService {
 
     return this.orderRepository.save(order);
   }
+
+  async trackOrders(userId: string): Promise<Order[]> {
+    return this.orderRepository.find({
+      where: { user: { id: userId } },
+      relations: ['orderItems', 'orderItems.menuItem'],
+      order: { createdAt: 'DESC' },
+    });
+  }
 }
