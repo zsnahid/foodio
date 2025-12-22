@@ -1,5 +1,5 @@
+import { MenuItem } from 'src/menu-items/entities/menu-item.entity';
 import { Column, Entity, OneToMany, PrimaryGeneratedColumn } from 'typeorm';
-import { MenuItem } from './menu-item.entity';
 
 @Entity('categories')
 export class Category {

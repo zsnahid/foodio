@@ -1,9 +1,9 @@
 import { ConflictException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { UserService } from 'src/user/user.service';
+import { UserService } from 'src/users/user.service';
 import * as bcrypt from 'bcrypt';
 import { CreateUserDto } from './dto/create-user.dto';
-import { User } from 'src/user/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 
 @Injectable()
 export class AuthService {
@@ -49,7 +49,7 @@ export class AuthService {
 
   // eslint-disable-next-line @typescript-eslint/require-await
   async signin(user: Partial<User>): Promise<{ access_token: string }> {
-    const payload = { username: user.name, sub: user.id };
+    const payload = { username: user.name, role: user.role, sub: user.id };
     return {
       access_token: this.jwtService.sign(payload),
     };

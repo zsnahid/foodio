@@ -2,11 +2,13 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
-import { UserModule } from './user/user.module';
-import { MenuModule } from './menu/menu.module';
-import { OrderModule } from './order/order.module';
+import { UserModule } from './users/user.module';
+import { MenuModule } from './menu-items/menu.module';
+import { OrderModule } from './orders/order.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
+import { CategoriesModule } from './categories/categories.module';
+import { AdminModule } from './admin/admin.module';
 
 @Module({
   imports: [
@@ -24,6 +26,8 @@ import { TypeOrmModule } from '@nestjs/typeorm';
       }),
       inject: [ConfigService],
     }),
+    CategoriesModule,
+    AdminModule,
   ],
   controllers: [AppController],
   providers: [AppService],

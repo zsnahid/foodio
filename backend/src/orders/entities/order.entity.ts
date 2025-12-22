@@ -1,5 +1,4 @@
-import { OrderStatus } from 'src/common/enums/order-status.enum';
-import { User } from 'src/user/entities/user.entity';
+import { User } from 'src/users/entities/user.entity';
 import {
   Column,
   CreateDateColumn,
@@ -9,6 +8,13 @@ import {
   PrimaryGeneratedColumn,
 } from 'typeorm';
 import { OrderItem } from './order-item.entity';
+
+enum OrderStatus {
+  PENDING = 'pending',
+  PREPARING = 'preparing',
+  READY = 'ready',
+  COMPLETED = 'completed',
+}
 
 @Entity('orders')
 export class Order {

@@ -1,5 +1,4 @@
-import { UserRole } from 'src/common/enums/role.enum';
-import { Order } from 'src/order/entities/order.entity';
+import { Order } from 'src/orders/entities/order.entity';
 import {
   Column,
   CreateDateColumn,
@@ -7,6 +6,11 @@ import {
   OneToMany,
   PrimaryGeneratedColumn,
 } from 'typeorm';
+
+export enum UserRole {
+  ADMIN = 'admin',
+  USER = 'user',
+}
 
 @Entity('users')
 export class User {
