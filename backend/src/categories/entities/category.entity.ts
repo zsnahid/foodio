@@ -9,9 +9,6 @@ export class Category {
   @Column({ unique: true })
   name: string;
 
-  @Column({ nullable: true })
-  imageUrl: string;
-
   @OneToMany(() => MenuItem, (menuItem) => menuItem.category)
   menuItems: MenuItem[];
 }

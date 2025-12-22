@@ -1,7 +1,9 @@
 import {
+  Body,
   Controller,
   Delete,
   Get,
+  Param,
   Patch,
   Post,
   UseGuards,
@@ -11,24 +13,34 @@ import { JwtAuthGuard } from 'src/auth/guards/jwt-auth.guard';
 import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { UserRole } from 'src/users/entities/user.entity';
 import { Roles } from 'src/auth/decorators/roles.decorator';
+import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
 
 @Controller('admin')
-// ** All endpoints is protected by a guard to ensure only users with ADMIN role can access them **
+// ** All endpoints are protected by a guard to ensure only users with ADMIN role can access them
 @UseGuards(JwtAuthGuard, RolesGuard)
 @Roles(UserRole.ADMIN)
 export class AdminController {
   constructor(private readonly adminService: AdminService) {}
   // List all categories
   @Get('categories')
-  async getCategories() {}
+  async getCategories() {
+    return this.adminService.getCategories();
+  }
 
   // Create a new category
   @Post('categories')
-  async createCategory() {}
+  async createCategory(@Body() createCategoryDto: CreateCategoryDto) {
+    return this.adminService.createCategory(createCategoryDto);
+  }
 
   // Edit category details
-  @Patch('categories/:id')
-  async updateCategory() {}
+  @Patch('categories/:categoryId')
+  async updateCategory(
+    @Param('categoryId') categoryId: string,
+    @Body() updateCategoryDto,
+  ) {
+    return this.adminService.updateCategory(categoryId, updateCategoryDto);
+  }
 
   // Delete a category
   @Delete('categories/:id')
@@ -36,7 +48,9 @@ export class AdminController {
 
   // List all menu items
   @Get('menu-items')
-  async getMenuItems() {}
+  async getMenuItems() {
+    return this.adminService.getMenuItems();
+  }
 
   // Create a new menu item
   @Post('menu-items')
@@ -52,7 +66,9 @@ export class AdminController {
 
   // List all orders
   @Get('orders')
-  async getAllOrders() {}
+  async getOrders() {
+    return this.adminService.getOrders();
+  }
 
   // Update order status
   @Patch('orders/:id/status')

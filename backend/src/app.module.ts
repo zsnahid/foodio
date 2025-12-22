@@ -7,7 +7,7 @@ import { MenuModule } from './menu-items/menu.module';
 import { OrderModule } from './orders/order.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { CategoriesModule } from './categories/categories.module';
+import { CategoriesModule } from './categories/category.module';
 import { AdminModule } from './admin/admin.module';
 
 @Module({

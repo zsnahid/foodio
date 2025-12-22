@@ -1,13 +1,13 @@
 import { Controller, Get } from '@nestjs/common';
-import { CategoriesService } from './categories.service';
+import { CategoryService } from './category.service';
 
 @Controller('categories')
 export class CategoriesController {
-  constructor(private readonly categoriesService: CategoriesService) {}
+  constructor(private readonly categoryService: CategoryService) {}
 
   // Fetches all categories along with their associated menu items for the homepage
   @Get()
   findAll() {
-    return this.categoriesService.findAll();
+    return this.categoryService.findAll();
   }
 }
