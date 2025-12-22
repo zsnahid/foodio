@@ -7,6 +7,8 @@ import { Repository } from 'typeorm';
 import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
 import { Category } from 'src/categories/entities/category.entity';
 import { UpdateCategoryDto } from '../categories/dto/update-category.dto';
+import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
+import { MenuItem } from 'src/menu-items/entities/menu-item.entity';
 
 @Injectable()
 export class AdminService {
@@ -16,6 +18,8 @@ export class AdminService {
     @InjectRepository(Order) private orderRepository: Repository<Order>,
     @InjectRepository(Category)
     private categoryRepository: Repository<Category>,
+    @InjectRepository(MenuItem)
+    private menuItemRepository: Repository<MenuItem>,
   ) {}
 
   async getCategories(): Promise<Category[]> {
@@ -53,6 +57,29 @@ export class AdminService {
   async getMenuItems() {
     return this.menuService.findAll();
   }
+
+  async createMenuItem(
+    createMenuItemDto: CreateMenuItemDto,
+  ): Promise<MenuItem> {
+    const { categoryId, ...menuItemDetails } = createMenuItemDto;
+    const category = await this.categoryRepository.findOneBy({
+      id: categoryId,
+    });
+
+    if (!category) {
+      throw new NotFoundException(`Category with ID ${categoryId} not found`);
+    }
+
+    const menuItem = this.menuItemRepository.create({
+      ...menuItemDetails,
+      category,
+    });
+    return this.menuItemRepository.save(menuItem);
+  }
+
+  async updateMenuItem() {}
+
+  async deleteMenuItem() {}
 
   async getOrders() {
     return this.orderRepository.find({ relations: ['orderItems'] });

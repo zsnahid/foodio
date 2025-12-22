@@ -14,6 +14,7 @@ import { RolesGuard } from 'src/auth/guards/roles.guard';
 import { UserRole } from 'src/users/entities/user.entity';
 import { Roles } from 'src/auth/decorators/roles.decorator';
 import { CreateCategoryDto } from 'src/categories/dto/create-category.dto';
+import { CreateMenuItemDto } from 'src/menu-items/dto/create-menu-item.dto';
 
 @Controller('admin')
 // ** All endpoints are protected by a guard to ensure only users with ADMIN role can access them
@@ -54,7 +55,9 @@ export class AdminController {
 
   // Create a new menu item
   @Post('menu-items')
-  async createMenuItem() {}
+  async createMenuItem(@Body() createMenuItemDto: CreateMenuItemDto) {
+    return this.adminService.createMenuItem(createMenuItemDto);
+  }
 
   // Update item details or set availability
   @Patch('menu-items/:id')
