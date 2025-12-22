@@ -94,7 +94,10 @@ export class AdminService {
     return this.menuItemRepository.save(menuItem);
   }
 
-  async deleteMenuItem() {}
+  async deleteMenuItem(id: string): Promise<boolean> {
+    const result = await this.menuItemRepository.delete(id);
+    return result.affected ? result.affected > 0 : false;
+  }
 
   async getOrders() {
     return this.orderRepository.find({ relations: ['orderItems'] });

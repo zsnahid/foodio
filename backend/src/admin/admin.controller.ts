@@ -73,7 +73,9 @@ export class AdminController {
 
   // Delete a menu item
   @Delete('menu-items/:menuItemId')
-  async deleteMenuItem() {}
+  async deleteMenuItem(@Param('menuItemId') menuItemId: string) {
+    return this.adminService.deleteMenuItem(menuItemId);
+  }
 
   // List all orders
   @Get('orders')
