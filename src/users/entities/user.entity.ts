@@ -1,20 +1,20 @@
-import { Order } from 'src/orders/entities/order.entity';
+import { Order } from "src/orders/entities/order.entity";
 import {
   Column,
   CreateDateColumn,
   Entity,
   OneToMany,
   PrimaryGeneratedColumn,
-} from 'typeorm';
+} from "typeorm";
 
 export enum UserRole {
-  ADMIN = 'admin',
-  USER = 'user',
+  ADMIN = "admin",
+  USER = "user",
 }
 
-@Entity('users')
+@Entity("users")
 export class User {
-  @PrimaryGeneratedColumn('uuid')
+  @PrimaryGeneratedColumn("uuid")
   id: string;
 
   @Column()
@@ -26,10 +26,10 @@ export class User {
   @Column()
   address: string;
 
-  @Column({ select: false })
+  @Column()
   password: string;
 
-  @Column({ type: 'enum', enum: UserRole, default: UserRole.USER })
+  @Column({ type: "enum", enum: UserRole, default: UserRole.USER })
   role: UserRole;
 
   @OneToMany(() => Order, (order) => order.user)
